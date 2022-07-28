@@ -1,0 +1,19 @@
+\chapter{Quick and dirty, a checklist}
+More thorough explanations will follow, but if you're comfortable with \LaTeX and are ready to jump right in here's a TL;DR checklist to minimize the number of revisions ETD may suggest:
+
+\begin{todolist}
+\item Do you have a single major professor or two co-major professors? Make sure you use the correct settings in the title page and comment out what you don't need.
+\item Scroll through the Table of Contents and make sure everything looks right. 
+\begin{todolist}
+\item Chapter and section headings should use Title Case (where all words except some prepositions/articles are capitalized), and for subsections and lower levels, headings should use sentence case (regular capitalization). A package is currently adjusting all titles in chapters and sections to add title case, which should be reflected in the Table of Contents, but this may cause incorrect capitalization of some words.
+\item Subsubsection headings should be in sentence case (only the first word and proper nouns are capitalized.) The Table of Contents only lists up to subsubsections but if you use any finer sectioning commands you will have to check that the headings printed correctly ``manually''
+\end{todolist}
+\item Though most widow/orphan lines should be taken care of, look out for orphan headings: headings (where the title prints) of subsections appear as the last line of a page. Fix these by adding \verb|\newpage| wherever appropriate.
+\item Check the margins and make sure you don't have anything running off the sides of the page. When including long expressions in math mode in a paragraph, consider using \verb|\begin{sloppypar}| and \verb|\end{sloppypar}| to make sure they don't exceed the text width. 
+\item If you have a lot of large images, they may leave large gaps in the text if you use \texttt{[H]} or \texttt{[h!]} positions. Relax them to \texttt{[h]} or even \texttt{[htpb]} so that large gaps, whenever appropriate, are filled with text. The guidelines say not to leave half a page or 5.5 inches empty, but shorter empty spaces will still be flagged by reviewers (because they're not measuring and neither are we). 
+\item Equation environments, especially if you have large elementes like matrices, can be tricky because they look like images to the average ETD reviewer. It is easier (though not very elegant) to add/remove text where you can to make sure you're not leaving large empty spaces when equations happen near a page break.
+\item Figures should have captions {\em below} and tables should have captions {\em above}. The space has already been assigned but you have to make sure to call the \verb|\caption| command in the right place. Scan through your document to make sure all captions are where they should be.
+\item ETD reviewers will not check for content errors or typos, so comb through the document multiple times and make peace with the fact that you will almost certainly miss something. Just try not to let anything major slip through. 
+\end{todolist}
+
+

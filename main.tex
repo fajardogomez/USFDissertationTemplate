@@ -1,0 +1,79 @@
+\documentclass[boldcaps]{USFDissertation}
+%% Package options
+% Font sizes (Default 10pt)
+%   10pt, 11pt, 12pt
+% Headings styles (No default, MUST choose one)
+%   boldheadings (only bold), 
+%   allcaps (chapter headings all caps only), 
+%   boldcaps (bold and all caps), 
+%   plainheadings (neither)
+
+%% Keeping the preamble and title page in separate files keeps this one tidy
+
+% Fill out the information that goes in the title page here
+\input{titlepage}
+
+% The preamble.tex file is a more general preamble where you can load packages, define commands and macros.
+\input{preamble}
+
+% The style_preamble.tex file is for style/formatting. It has been written to mostly match USF's ETD guidelines and should be modified with caution.
+\input{style_preamble}
+
+%% Begin the document itself
+\begin{document}
+
+%% Make a title page
+\maketitle
+
+\doublespacing
+
+% Dedication and acknowledgments
+\input{dedication}
+
+\singlespacing
+
+% Begin numbering with roman numerals
+\frontmatter
+
+%% Insert a table of contents
+% \clearpage
+\tableofcontents
+
+%% Insert a table of tables -- comes before figures in the format.
+% The tocloft package does not include a clear page, so we override that here.
+\clearpage
+\addcontentsline{toc}{chapter}{List Of Tables}% Print LOT in TOC
+\listoftables
+
+%% Insert a table of figures
+\clearpage
+\addcontentsline{toc}{chapter}{List Of Figures}% Print LOF in TOC
+\listoffigures
+
+\doublespacing
+\input{abstract}
+
+%% Begin page numbering with arabic numerals
+\mainmatter
+
+%% Strongly suggest you make separate files for each chapter
+
+%% Chapter 1
+\input{chapter01}
+
+%% Chapter 2
+\input{chapter02}
+
+% %% Chapter 3
+% You get the idea.
+
+% Default name is ``Bibliography,'' you may want to call it ``References''
+\printbibliography[heading=bibintoc,title=References]
+
+% Any chapters included after this command will be formatted
+% as appendices.
+\appendix
+\input{appendix}
+
+%% ... The End
+\end{document}

@@ -1,0 +1,125 @@
+\chapter{How to use this template}
+The goal of this template is to save you time (and effort) trying to put together your dissertation (hard enough as it is). This chapter covers many of the basics. 
+
+\section{Overview}
+This template uses multiple files to separate out chapters and major components as well as folders to neatly separate images. If this does not make your life easier, feel free to merge things later. All examples and instructions here assume the standard set up.
+
+\begin{enumerate}
+\item \texttt{titlepage.tex}. Fill this one out with all the relevant information for the title page. Make sure to comment out or delete anything you don't need. 
+\item \texttt{preamble.tex}. You can load any additional packages you need here as well as create your own commands and macros. Some are already defined for you. 
+\item \texttt{style_preamble.tex}. This one is for formatting nerds. Most things are handled by the .cls file, but you can a few things here without breaking anything (hopefully). 
+\begin{itemize}
+\item You can format the bibliography. Initially it is set to sort numerically. If you'd like to change the name used for the bibliography (currently set to ``References'') adjust it in the options of \verb|\printbibliography| on \texttt{main.tex}.
+\item The \LaTeX default is to indent almost every paragraph (all {\em except} for paragraphs immediatelly after a heading). If you would rather indent {\em every} paragraph, without exception, remove the \% symbol to load the \texttt{indentfirst} package.
+\item If you like to use hyperlinks, the \texttt{hyperref} package is loaded for you and initialized with {\color{pdflinkcolor}dark blue} (pdf links), {\color{pdfcitecolor}dark red}, and {\color{pdfurlcolor}dark green} for references. As of Summer 2022, the ETD guidelines do not mention hyperlinks so there is no established standard for whether or not to use them or how to implement them. You may conceal links by setting all colors to black, or disable them altogether by just not loading the \texttt{hyperref} package.
+\item The \texttt{cleveref} package is loaded to make references a bit easier (examples of how later on). As far as formatting goes, just know that if you create new environments they may not get referenced correctly until you feed \texttt{cleveref} the correct names.
+\end{itemize}
+\item \texttt{dedication.tex} You can (optionally) dedicate your dissertation to anyone and write acknowledgments here. 
+\item \texttt{abstract.tex} Self-explanatory, for the abstract.
+\item \texttt{chapter<n>.tex} Only two of these are included but add as many as you like. Just make sure to lead with \verb|\chapter{<title>}| on the first line of each file.
+\item \texttt{appendix.tex} After the \verb|\appendix| command is called, any additional chpaters are treated as an appendix. You can choose to include them all in one file (if they are short) or as separate files (\texttt{appendix01.tex, appendix02.tex}, etc.)
+\item \texttt{biblio.bib} Feel free to modify this if \texttt{biblatex} is not your thing, but the default is to load it in the .cls file (be aware in case you load something else) and refer to the \texttt{biblio.bib} file for information. You can usually download citations in .bib format and then modify the entries so they are easier to cite. 
+\item \texttt{main.tex} Not a lot happens here. To keep things tidy, you can add new files with \verb|\input{<filename>}| commands.
+\end{enumerate}
+
+\section{Quick start}
+Just a few things to keep in mind as you write things. 
+\subsection{Chapter headings}
+Chapter headings can be modified by loading different options for the document class in \texttt{main.tex}.
+
+\lstinputlisting[firstline=1, lastline=1]{main.tex}
+
+The option \texttt{boldcaps} most closely resembles the sample .pdf files posted on the ETD website (as of Summer 2022), though \texttt{boldheadings} should also be acceptable. For the boldface averse, there are also \texttt{allcaps} (which uses all caps headings for chapters) and \texttt{plainheadings} (\verb|\normalfont| throughout) are also available, though they may not match guidelines. You can also modify the font size here. 
+
+\subsection{title case and sentence case}
+Chapter, section and subsection heading should use title case (Where Every Major Word is Capitalized), while everything else (subsubsection, paragraph, etc.) should use sentence case (Where only the first word and proper names are capitalized). Title case is implemented automatically. Note that while the title of this subsection is typed
+\lstinputlisting[firstline=34, lastline=34]{chapter02.tex}
+without any capital letters, it prints both in the heading and Table of Contents with correct capitalization. However, this setting does not affect subsubsections.
+
+\subsubsection{title case is not applied here}
+\subsubsection{You should use sentence case when typing titles}
+The suggested use is to type all sectioning titles in {\em sentence case}. If it needs to be adjusted to title case, it will be done automatically and it will otherwise be left as is. The current settings in \texttt{USFDissertation.cls} are
+\begin{lstlisting}
+\usepackage{titlecaps} % For Title Case headings
+% List of words that will not be capitalized in Title Case
+\Addlcwords{of, and, a, an, the, or, to, in, on}
+\end{lstlisting}
+If any words that should remain lower case are incorrectly capitalized, add them there.
+
+\section{Floats}
+There is a very good chance you will have to include figures in your dissertation. Note that you can add an optional position parameter when you include floating elements. If you don't include any, \LaTeX will decide the placement for you. You can always force an element to appear exactly where it is called with \texttt{[H]} or \texttt{[h!]}, but be aware that it prevents any empty spaces after the object from being filled with text that is typed after it. The options for positions are 
+\begin{itemize}
+\item \texttt{h} Here. A soft suggestion.
+\item \texttt{H} HERE. In shouty caps.
+\item \texttt{t} Top, of the page.
+\item \texttt{b} Bottom, self-explanatory.
+\item \texttt{p} Page, meaning in a new page only for the float.
+\item Adding an exclamation mark (\texttt{!}) to any of these overrides any choice \LaTeX would make on its own. Use sparingly.
+\end{itemize}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=2in]{images/fig}
+\end{center}
+\caption{This is figure 1.}
+\label{fig1}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=2in]{images/fig}
+\caption{This is figure 2. Also a fig.}
+\label{fig2}
+\end{figure}
+
+To keep things tidy, all image files are kept in a folder. This means that the \verb|\includegraphics| command needs to have the parent directory (i.e. just typing \verb|\includegraphics{fig}| would not work). Just to show that it is an option, \Cref{fig3} was made with \texttt{PSTricks}. Bear in mind that projects with PSTricks should be compiled with XeLaTeX (pdfLaTeX will not recognize the commands) and that if opacity values are provided then TeX Live 2020 should be used\footnote{A bug in the 2021 version ignores opacity. Should be fixed in the 2022 version whenever it comes out.}.
+
+\begin{figure}[htpb]
+\label{fig3}
+\centering
+\input{tikz/simplices}
+\caption{This is figure 3. Abstract figs created with \texttt{PSTricks}.}
+\end{figure}
+
+\begin{table}
+\caption{Here is a table. It is important for ETD that figure captions are \textbf{below} the table and table captions are \textbf{above}.}
+\centering
+\begin{tabular}{ll}
+a & table\\
+goes& here\\
+\end{tabular}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular}{ll}
+a & table\\
+goes& here\\
+\end{tabular}
+\caption{This caption is in the wrong position. Since vertical space has been reserved above the tables only, it will not look right.}
+\end{table}
+
+Figure \ref{fig1} is a fig. Compare the vertical spacing assigned to \cref{fig1} and \cref{fig2} before the caption. For figures and tables, \verb|\centering| adds less vertical padding. Use \verb|\begin{center}| and \verb|\end{center}| to enclose sections with more than one element that need to be centered. 
+
+\section{Theorem environments}
+Several theorem-like environments are pre-defined for you in \texttt{preamble.tex}. Here is one example of how to use them. Note that the optional argument \verb|<Theorem name>| appears in parentheses and can be used when using named theorems. 
+
+\begin{Thm}[Theorem name]
+\label{mythm}
+This is a theorem.
+\end{Thm}
+
+\begin{Def}
+This is a definition.
+\end{Def}
+
+\begin{Ex}
+This is an example. 
+\end{Ex}
+
+When referring to environments, pay attention to where the label command is added, or else the references may not print correctly.
+
+\section{Cross-references}
+The \texttt{cleveref} package allows for easier references. Did you write a proposition that turned into a lemma? Instead of having to track down these changes and replacing ``proposition \verb|\ref{<label>}|'' with ``lemma \verb|\ref{<label>}|,'' use ``\verb|\cref{<label>}|. For example, this points to \cref{mythm}. The capitalized version exists too, \Cref{mythm}. Make sure the labels are inside the environments when you add them. In the case of figures, it's important that labels be added after captions. A reference to \Cref{fig3} fails here because the label is in the wrong place. 
+
+All things you cite should be listed in \texttt{biblio.bib} and be given an easy-to-remember name. For example, we can cite a book here as \cite{sample}. 

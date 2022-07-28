@@ -1,0 +1,95 @@
+%% General use preamble. Some packages, environments, and macros are
+%% included already as suggestions. Modify as needed.
+\usepackage{mathtools}
+\usepackage{amsmath, amsthm, amssymb, amsfonts, amsopn, bm, bbm}
+
+% Silence warnings about \titlecap in hyperref links. This may silence other related warnings. Comment out to check.
+\usepackage{silence}
+\WarningFilter{hyperref}{Token not allowed in a PDF string}
+
+% More flexibility formatting enumerated/itemized lists.
+\usepackage{enumitem}
+
+\usepackage{etoolbox} % General code fixing. Useful for macros that redefine things in the class file.
+
+% To make pretty pictures with tex instead of importing figures. Comment out/delete if not drawing with pstricks. Be aware that adding a lot of images increases the time it takes to compile the document.
+% Opacity does not work with PDFtex and you will have to change the compiler. On Overleaf, click on Menu - Compiler  and select XeLaTeX, 2020 version. The 2021 version has a bug that ignores opacity. Should be fixed in the 2022 version but that has not been released at time of writing (Summer 2022). 
+\usepackage[usenames,dvipsnames]{pstricks}
+\usepackage{epsfig}
+\usepackage{pst-grad} % For gradients
+\usepackage{pst-plot} % For axes
+\usepackage[space]{grffile} % For spaces in paths
+
+\usepackage{float}
+
+\usepackage{relsize} % make large math symbols
+\usepackage{tikz}
+\usepackage{breqn} % break long math into lines
+
+%%% Only loading these packages because this is a template!!! Not necessary for math.
+
+% Modified list environment for a to-do list
+\newlist{todolist}{itemize}{2}
+\setlist[todolist]{label=$\square$}
+% To include code that looks pretty
+\usepackage{listings} % for code listing
+\lstset{language=[LaTeX]TeX} % set the programming language for listings
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+ 
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+%%%%
+
+
+%% Define theorem environments
+
+% Use the syntax \newtheorem{<command>}[<counter>]{<Environment name>}
+
+% Theorems are numbered by chapter, other environments use the same counter as theorems.
+% If you change these commands, make sure to adjust the cleveref names in the style_preamble file. 
+\newtheorem{Thm}{Theorem}[chapter]
+\newtheorem{Coro}[Thm]{Corollary}
+\newtheorem{Prop}[Thm]{Proposition}
+\newtheorem{Lem}[Thm]{Lemma}
+\newtheorem{Conj}[Thm]{Conjecture}
+\newtheorem{Prob}[Thm]{Problem}
+\theoremstyle{definition}
+\newtheorem{Def}[Thm]{Definition}
+\newtheorem{Ex}[Thm]{Example}
+\newtheorem{Rmk}[Thm]{Remark}
+\newtheorem{Note}[Thm]{Notation}
+
+% To add comments. Feel free to change the names/colors and add more people.
+% Use syntax \Name{<text>}
+\newcommand{\PersonA}[1]{{\color{OliveGreen}\textbf{Person A says:} #1}}
+
+% A non-comprehensive list of useful math symbols, delimiters and operators.
+% Hopefully enough examples are provided to help you write more of your own.
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\tinfty}{\rightarrow \infty}
+\newcommand{\seq}[1]{\left(#1_n\right)_{n \in \N}}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclareMathOperator{\sign}{sign}
+
