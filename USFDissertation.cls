@@ -49,7 +49,7 @@
 %% settings. Further modifications by Lina Fajardo Gómez starting on March
 %% 22nd, 2022.
 
-
+%% v.3.2:  Margins are now consistent across different font sizes. No widow headings.
 %% v.3.1:  Title case now implemented on chapters  Deleted a lot of unused
 %%         or unnecessary options and commands. Also adjusted separation 
 %%         between numbers and titles in the table of contents to scale with
@@ -99,10 +99,10 @@
 %%      Correct Format is Month Day, Year. Include it in your format check!
 %% \copyrightdate{`date`}              % intellectual property...
 %%      Correct Format is Year (only)... use the Gregorian calendar! }
-
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{USFDissertation}
               [2006/05/15 v3 University of South Florida Mathematics Department LaTeX dissertation class]
+
 \usepackage{ifthen}
 \usepackage{titlecaps} % For Title Case headings
 % List of words that will not be capitalized in Title Case
@@ -113,12 +113,13 @@
 \newcommand\@ptsize{}
 
 \newif\if@titlepage
-\newif\if@showlabels
-\newif\if@usersfs
+
+% Headings format
 \newif\if@boldchapters
 \newif\if@capschaps
 \newif\if@boldcapschaps
 \newif\if@boldsections
+
 \newif\if@appendix
 \newif\if@restonecol
 \@titlepagetrue
@@ -160,12 +161,11 @@
    \renewcommand{\secsep}{0.83em}
    \renewcommand{\subsecsep}{1.5em}
    \renewcommand{\subsubsecsep}{2.2em}}
+   
 \DeclareOption{titlepage}{\@titlepagetrue}
 \if@compatibility\else
   \DeclareOption{notitlepage}{\@titlepagefalse}
 \fi
-
-\DeclareOption{rsfs}{\@usersfstrue} % Enabling Ralph Smith Formal Script
 
 \DeclareOption{leqno}{\input{leqno.clo}}
 \DeclareOption{fleqn}{\input{fleqn.clo}}
@@ -200,37 +200,20 @@
    }
 
 %%%% Default options loaded
-\ExecuteOptions{letterpaper,10pt}
+\ExecuteOptions{letterpaper, 10pt}
 \ProcessOptions
-\input{size1\@ptsize.clo}
 
 %%%% Layout
-\setlength\h@rdreturn{.9\baselineskip}
-
+\input{size1\@ptsize.clo}
 \setlength\lineskip{1\p@}
 \setlength\normallineskip{1\p@}
-
-\setlength\topmargin{0 \p@}
-\setlength\voffset{-.5in}
-\setlength\hoffset{0in}
-\setlength\topmargin{0\p@}
-\setlength\headheight{.165in}
-\setlength\headsep{.335in}
-\setlength\footskip{.415in}
-\setlength\evensidemargin{0\p@}
-\setlength\oddsidemargin{0\p@}
-\setlength\marginparwidth{0\p@}
-\setlength\marginparsep{0\p@}
-\setlength\marginparpush{0\p@}
-\setlength\textheight{8.5in}
-\setlength\textwidth{6.5in}
-\setlength\parskip{0\p@ \@plus \p@}
-\setlength\leftmargin{0\p@}
-\@lowpenalty   51
-\@medpenalty  151
-\@highpenalty 301
-
 \renewcommand\baselinestretch{}
+\setlength\h@rdreturn{.9\baselineskip}
+\usepackage[margin=1in]{geometry}
+
+% Double-spacing is cleaner when done with a package
+\usepackage{setspace}
+
 \setlength\parskip{0\p@ \@plus \p@}
 \@lowpenalty   51
 \@medpenalty  151
@@ -247,11 +230,6 @@
 \renewcommand\dbltopfraction{.7}
 \renewcommand\dblfloatpagefraction{.5}
 
-\if@usersfs
-  \DeclareFixedFont{\RS}{U}{rsfs}{m}{n}{10pt}
-  \DeclareMathAlphabet{\mRS}{U}{rsfs}{m}{n}
-\fi
-
 %%%% Making a title page
 \if@titlepage
   \newcommand\maketitle{
@@ -259,8 +237,9 @@
   \let\footnotesize\small
   \let\footnoterule\relax
   % Custom title page here
-  \begin{center}%
-        \vspace*{0.85in}
+  \centering
+  \topskip=0pt
+        \vspace*{1in}
         \@title\par
     \vspace{3\h@rdreturn}\par
       by\par\vspace{3\h@rdreturn}\par
@@ -291,7 +270,7 @@
   }\vspace{3\h@rdreturn}
   {Keywords: \mykeywords}\par\vspace{\h@rdreturn}
   {Copyright $\copyright$ \mycopyrightdate, \@author}
-      \end{center}
+
   \end{titlepage}%
   \setcounter{footnote}{0}%
   \global\let\thanks\relax
@@ -302,18 +281,26 @@
 \fi
 
 %%%% Sectioning commands
+\DeclareRobustCommand{\MakeBold}[1]{\bfseries{#1}}
+\DeclareRobustCommand*{\MakeTitlecase}[1]{\titlecap{#1}}
+
+\if@boldchapters\newcommand{\chapfont}[1]{\MakeBold{#1}}
+  \else\if@capschaps \newcommand{\chapfont}[1]{\MakeUppercase{#1}}
+    \else\if@boldcapschaps\newcommand{\chapfont}[1]{\MakeUppercase{\MakeBold{#1}}}
+      \else \newcommand{\chapfont}[1]{#1}
+    \fi
+  \fi
+\fi
+
 \newcommand*\chaptermark[1]{}
 \setcounter{secnumdepth}{2}
-\newcounter {part}
 \newcounter {chapter}
 \newcounter {section}[chapter]
 \newcounter {subsection}[section]
 \newcounter {subsubsection}[subsection]
 \newcounter {paragraph}[subsubsection]
 \newcounter {subparagraph}[paragraph]
-\renewcommand \thepart {\@Roman\c@part}
 \renewcommand \thechapter {\@arabic\c@chapter}
-
 \renewcommand\thesection {\thechapter.\@arabic\c@section}
 \renewcommand\thesubsection   {\thesection.\@arabic\c@subsection}
 \renewcommand\thesubsubsection{\thesubsection.\@arabic\c@subsubsection}
@@ -322,6 +309,7 @@
 \newcommand\@chapapp{\chaptername}
 
 \newcommand\chapter{\clearpage
+                    \doublespacing 
                     \thispagestyle{plain}%
                     \global\@topnum\z@
                     \@afterindentfalse
@@ -331,22 +319,29 @@
                          \refstepcounter{chapter}%
                          \typeout{\@chapapp\space\thechapter.}%
                          \addcontentsline{toc}{chapter}%
-                                   {\@chapapp~\protect\numberline{\thechapter}#1}%
+                            {\@chapapp~\protect\numberline{\thechapter}\titlecap{#1}}%
                     \else
                       \addcontentsline{toc}{chapter}{\titlecap{#1}}%
                     \fi
                     \chaptermark{#1}%
                     \addtocontents{lof}{\protect\addvspace{10\p@}}%
                     \addtocontents{lot}{\protect\addvspace{10\p@}}%
+                    \topskip=0pt
                     \@makechapterhead{#2}%
+                    \doublespacing
                     \@afterheading
                     }
 
+% Adjusting the margins when creating a chapter heading
+\newlength\chaptoplen
+\setlength\chaptoplen{\dimexpr \baselineskip-\ht\strutbox-1in\relax}
+\newlength\schaptoplen
+\setlength\schaptoplen{\dimexpr\topskip+\baselineskip-\ht\strutbox-1in\relax}
 %%%% Special chapter heads required
 \def\@makechapterhead#1{%
-  \vspace*{.52in}
   \begingroup
-     \begin{center}
+  \vspace*{-\chaptoplen}
+     \centering
      \ifnum \c@secnumdepth >\m@ne
       \chapfont{\@chapapp \space \thechapter:}
       \par\nobreak
@@ -354,24 +349,22 @@
         \interlinepenalty\@M
           \chapfont{\titlecap{#1}}
           \par\nobreak 
-       \end{center}\endgroup
-  \vspace{1\h@rdreturn}}
+       \endgroup
+  \vspace{\baselineskip}
+  }
 \def\@schapter#1{%
   \@makeschapterhead{#1}%
   \@afterheading
 }
 \def\@makeschapterhead#1{%
-  \vspace*{.5in}
-  \vspace*{-0.5em}
   \begingroup
-   \begin{center}
+  \vspace*{-\schaptoplen}
+    \centering
        \interlinepenalty\@M
-          \chapfont{#1}
+          \chapfont{\titlecap{#1}}
        \par\nobreak % 
-   \end{center}
   \endgroup
-    \vspace{2\h@rdreturn}%
-    \vspace{-0.5em}
+    \vspace{1\h@rdreturn}%
 }
 
 \newcommand\section{\@startsection {section}{1}{\z@}%
@@ -385,11 +378,6 @@
                                      {1.5ex \@plus .2ex}%
                                      {\if@boldsections\bfseries\else\normalfont\fi}}
 
-% Use Title Case in section and subsection headings
-\let\oldsection\section
-\def\section#1{\oldsection{\titlecap{#1}}}
-\let\oldsubsection\subsection
-\def\subsection#1{\oldsubsection{\titlecap{#1}}}
 \newcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
                                      {-3.25ex\@plus -1ex \@minus -.2ex}%
                                      {-1em}%
@@ -405,6 +393,7 @@
 
 %% There is no good way to implement sentence case, since proper names will not
 %% be recognized and the list of exceptions would be endless
+
 \setlength\leftmargini  {2.5em}
 \leftmargin  \leftmargini
 \setlength\leftmarginii  {2.2em}
@@ -443,18 +432,9 @@
 
 \newenvironment{abstract}{%
   \clearpage
-  \vspace*{.52in}
+  \chapter*{\abstractname}
   \phantomsection%adds hyperref anchor
 \addcontentsline{toc}{chapter}{\abstractname}
-\begin{center}%
-  \if@boldchapters\MakeBold{\abstractname}
-    \else\if@capschaps\MakeUppercase{\abstractname}
-      \else\if@boldcapschaps\MakeUppercase{\MakeBold{\abstractname}}
-      \fi
-    \fi
-  \fi
-\end{center}
-\vspace{\h@rdreturn}
 }
 {}
 
@@ -543,7 +523,23 @@
 \newenvironment{table*}
               {\@dblfloat{table}}
               {\end@dblfloat}
-  
+              
+%%% New
+\newlength\abovecaptionskip
+\newlength\belowcaptionskip
+\setlength\abovecaptionskip{10\p@}
+\setlength\belowcaptionskip{0\p@}
+\long\def\@makecaption#1#2{%
+  \vskip\abovecaptionskip
+  \sbox\@tempboxa{#1: #2}%
+  \ifdim \wd\@tempboxa >\hsize
+    #1: #2\par
+  \else
+    \global \@minipagefalse
+    \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
+  \fi
+  \vskip\belowcaptionskip}  
+%%% 
 % In case there are any deprecated stragglers... 
 \DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
 \DeclareOldFontCommand{\sf}{\normalfont\sffamily}{\mathsf}
@@ -555,16 +551,6 @@
 \DeclareRobustCommand*\cal{\@fontswitch\relax\mathcal}
 \DeclareRobustCommand*\mit{\@fontswitch\relax\mathnormal}
 
-\DeclareRobustCommand{\MakeBold}[1]{\bfseries{#1}}
-
-\if@boldchapters\newcommand{\chapfont}[1]{\MakeBold{#1}}
-  \else\if@capschaps \newcommand{\chapfont}[1]{\MakeUppercase{#1}}
-    \else\if@boldcapschaps\newcommand{\chapfont}[1]{\MakeUppercase{\MakeBold{#1}}}
-      \else \newcommand{\chapfont}[1]{#1}
-    \fi
-  \fi
-\fi
-
 %%%% The table of contents and friends
 \newcommand\@pnumwidth{1.55em}
 \newcommand\@tocrmarg{2.55em}
@@ -573,6 +559,7 @@
 \newcommand\tableofcontents{%
     \clearpage
     \pagenumbering{roman}
+    \singlespacing
     \pagestyle{plain}
     \@restonecolfalse
     \chapter*{\contentsname
@@ -612,6 +599,7 @@
 \newcommand\listoffigures{
     \clearpage
       \@restonecolfalse
+    \singlespacing
     \chapter*{\listfigurename}%
       \@mkboth{\listfigurename}%
               {\listfigurename}%
@@ -621,6 +609,7 @@
 \newcommand\listoftables{%
     \clearpage
       \@restonecolfalse
+    \singlespacing
     \chapter*{\listtablename}%
       \@mkboth{%
           \listtablename}%
@@ -685,10 +674,14 @@
 \newcommand\indexname{Index}
 \newcommand\figurename{Figure}
 \newcommand\tablename{Table}
-\newcommand\partname{Part}
 \newcommand\chaptername{Chapter}
 \newcommand\appendixname{Appendix}
 \newcommand\abstractname{Abstract}
+\def\today{\ifcase\month\or
+  January\or February\or March\or April\or May\or June\or
+  July\or August\or September\or October\or November\or December\fi
+  \space\number\day, \number\year}
+  
 
 % USF Dissertation specific
 \newcommand\dedicationname{Dedication}
@@ -699,40 +692,24 @@
 %  dedication (optional)        To [person]/In Memory of [person]
 %  acknowledgments (optional)   Intelectual debts acknowledged
 %  bio (optional)               ``About the author'' page
+
 \newenvironment{dedication}{%
   \clearpage
+  \chapter*{\dedicationname}
   \thispagestyle{empty}
-  \vspace*{.52in}
-  \begin{center}
-          \chapfont{\dedicationname}
-  \end{center}
-    \vspace{\h@rdreturn}
 }{}
 \newenvironment{acknowledgments}{%
   \clearpage
+  \chapter*{\acknowledgmentsname}
   \thispagestyle{empty}
-  \vspace*{.52in}
-  \begin{center}
-          \chapfont{\acknowledgmentsname}
-    \end{center}
-    \vspace{\h@rdreturn}
-    \hspace*{\parindent}
 }{}
+
 \newenvironment{bio}{%
-  \setlength{\tempdim@}{\textwidth}
-  \addtolength{\tempdim@}{-\parindent}
-  \newpage\thispagestyle{empty}
-  \addtocontents{toc}{\protect\contentsline{bio}{\bioname}{End Page}}
-  \vspace*{.52in}
-  \begin{center}
-          \chapfont{\bioname}
-    \end{center}
-    \vspace{\h@rdreturn}
-    \setlength{\tempdim@}{\baselineskip}
-    \setlength{\baselineskip}{1.1066\tempdim@}
-    \hspace*{\parindent}
+  \clearpage
+  \chapter*{\bioname}
+  \thispagestyle{empty}
 }
-{\vspace{3\h@rdreturn}\vfill}
+{}
 
 % Leaving LOT and LOF to tocloft package
 % All formatting happens here
@@ -752,14 +729,16 @@
 \setlength{\cftparskip}{\baselineskip}
 
 % Adjust length from top of page to heading
-\setlength{\cftbeforetoctitleskip}{0.83in}
-\setlength{\cftbeforelottitleskip}{0.83in}
-\setlength{\cftbeforeloftitleskip}{0.83in}
+\setlength{\cftbeforetoctitleskip}{-\baselineskip}
+\addtolength{\cftbeforetoctitleskip}{1in}
+\setlength{\cftbeforelottitleskip}{-\baselineskip}
+\addtolength{\cftbeforelottitleskip}{1in}
+\setlength{\cftbeforeloftitleskip}{-\baselineskip}
+\addtolength{\cftbeforeloftitleskip}{1in}
 % Adjust length from heading to first line
-\setlength{\cftaftertoctitleskip}{0.3in}
-\setlength{\cftafterlottitleskip}{0.3in}
-\setlength{\cftafterloftitleskip}{0.3in}
-
+\setlength{\cftaftertoctitleskip}{\baselineskip}
+\setlength{\cftafterlottitleskip}{\baselineskip}
+\setlength{\cftafterloftitleskip}{\baselineskip}
 
 % Format LOT and LOF titles
 \renewcommand{\cftfigpresnum}{\figurename~}
@@ -771,7 +750,7 @@
 \renewcommand{\cftchapleader}{\normalfont\cftdotfill{\cftchapdotsep}}
 
 % Adjust spacing between section numbers and titles
-\renewcommand{\cftchapaftersnumb}{\hspace*{\chapsep}} % does nothing. Don't ask me why.
+\renewcommand{\cftchapaftersnumb}{\hspace*{\chapsep}} 
 \renewcommand{\cftsecaftersnumb}{\hspace*{\secsep}}
 \renewcommand{\cftsubsecaftersnumb}{\hspace*{\subsecsep}}
 \renewcommand{\cftsubsubsecaftersnumb}{\hspace*{\subsubsecsep}}
@@ -800,15 +779,7 @@
 \setlength\cftbeforefigskip{\baselineskip}
 \setlength\cftbeforetabskip{\baselineskip}
 
-\def\today{\ifcase\month\or
-  January\or February\or March\or April\or May\or June\or
-  July\or August\or September\or October\or November\or December\fi
-  \space\number\day, \number\year}
-  
 %%%% Other formatting bits and bobs: spacing, window/orphan line management, appendix 
-% Double-spacing is cleaner when done with a package
-\usepackage{setspace}
-
 % Adjusting figure/table captions
 \usepackage{caption}
 
@@ -818,8 +789,16 @@
 
 \usepackage[titletoc]{appendix}
 
+% The option nobottomtitles prevents widow headings.
+\usepackage[nobottomtitles]{titlesec}
+
+% Adding Title Case to section and subsection headings.
+\let\oldsection\section
+\def\section#1{\oldsection{\titlecap{#1}}}
+\let\oldsubsection\subsection
+\def\subsection#1{\oldsubsection{\titlecap{#1}}}
+
 % No widows or orphan lines, hopefully. This defaults to at least 2 lines at a page break but you can change that. 
-% Note that this DOES NOT avoid widow headings, e.g. for sections/subsections. You will have to insert page breaks manually for those. 
 \usepackage[all]{nowidow}
 
 % Adjusting figure and table captions and titles

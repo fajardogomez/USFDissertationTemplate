@@ -1,8 +1,8 @@
-\documentclass[boldcaps]{USFDissertation}
+\documentclass[boldcaps,10pt]{USFDissertation}
 %% Package options
-% Font sizes (Default 10pt)
+% Font sizes (default 10pt)
 %   10pt, 11pt, 12pt
-% Headings styles (No default, MUST choose one)
+% Headings styles (default plainheadings)
 %   boldheadings (only bold), 
 %   allcaps (chapter headings all caps only), 
 %   boldcaps (bold and all caps), 
@@ -13,11 +13,8 @@
 % Fill out the information that goes in the title page here
 \input{titlepage}
 
-% The preamble.tex file is a more general preamble where you can load packages, define commands and macros.
+% The preamble.tex file is where you can load packages, define commands and macros. Some useful ones and templates are included already.
 \input{preamble}
-
-% The style_preamble.tex file is for style/formatting. It has been written to mostly match USF's ETD guidelines and should be modified with caution.
-\input{style_preamble}
 
 %% Begin the document itself
 \begin{document}
@@ -25,18 +22,13 @@
 %% Make a title page
 \maketitle
 
-\doublespacing
-
 % Dedication and acknowledgments
 \input{dedication}
-
-\singlespacing
 
 % Begin numbering with roman numerals
 \frontmatter
 
 %% Insert a table of contents
-% \clearpage
 \tableofcontents
 
 %% Insert a table of tables -- comes before figures in the format.
@@ -50,7 +42,6 @@
 \addcontentsline{toc}{chapter}{List Of Figures}% Print LOF in TOC
 \listoffigures
 
-\doublespacing
 \input{abstract}
 
 %% Begin page numbering with arabic numerals
