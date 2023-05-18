@@ -49,6 +49,9 @@
 %% settings. Further modifications by Lina Fajardo Gómez starting on March
 %% 22nd, 2022.
 
+
+%% v.3.4:  Added \doublespacing and \singlespacing in main file. Bit of a hack but the commands built into TOC and friends were making the abstract and acknowledgments single spaced. 
+%% v.3.3:  Changed \thispagestyle{empty} to \pagenumbering{gobble} in frontmatter chapters. Updated list of lcwords in preamble. Removed a topskip=0pt in chapter definition to fix a blank page at the end of the document and adjusted chaptoplen measurements to fix top margins. Fixed spacing in front matter.
 %% v.3.2:  Margins are now consistent across different font sizes. No widow headings.
 %% v.3.1:  Title case now implemented on chapters  Deleted a lot of unused
 %%         or unnecessary options and commands. Also adjusted separation 
@@ -105,8 +108,6 @@
 
 \usepackage{ifthen}
 \usepackage{titlecaps} % For Title Case headings
-% List of words that will not be capitalized in Title Case
-\Addlcwords{of, and, a, an, the, or, to, in, on}
 
 \newlength{\h@rdreturn}
 \newlength{\tempdim@}
@@ -196,7 +197,7 @@
   \pagenumbering{arabic}}
 
 \newcommand\backmatter{%
-    \clearpage
+   \clearpage
    }
 
 %%%% Default options loaded
@@ -319,14 +320,14 @@
                          \refstepcounter{chapter}%
                          \typeout{\@chapapp\space\thechapter.}%
                          \addcontentsline{toc}{chapter}%
-                            {\@chapapp~\protect\numberline{\thechapter}\titlecap{#1}}%
+                            {\@chapapp~\protect\numberline{\thechapter:}\titlecap{#1}}%
                     \else
                       \addcontentsline{toc}{chapter}{\titlecap{#1}}%
                     \fi
                     \chaptermark{#1}%
                     \addtocontents{lof}{\protect\addvspace{10\p@}}%
                     \addtocontents{lot}{\protect\addvspace{10\p@}}%
-                    \topskip=0pt
+
                     \@makechapterhead{#2}%
                     \doublespacing
                     \@afterheading
@@ -334,9 +335,9 @@
 
 % Adjusting the margins when creating a chapter heading
 \newlength\chaptoplen
-\setlength\chaptoplen{\dimexpr \baselineskip-\ht\strutbox-1in\relax}
+\setlength\chaptoplen{\dimexpr \topskip+\baselineskip-1in\relax}
 \newlength\schaptoplen
-\setlength\schaptoplen{\dimexpr\topskip+\baselineskip-\ht\strutbox-1in\relax}
+\setlength\schaptoplen{\dimexpr\topskip+\baselineskip-1in\relax}
 %%%% Special chapter heads required
 \def\@makechapterhead#1{%
   \begingroup
@@ -432,6 +433,7 @@
 
 \newenvironment{abstract}{%
   \clearpage
+  \doublespacing
   \chapter*{\abstractname}
   \phantomsection%adds hyperref anchor
 \addcontentsline{toc}{chapter}{\abstractname}
@@ -701,13 +703,15 @@
 \newenvironment{acknowledgments}{%
   \clearpage
   \chapter*{\acknowledgmentsname}
-  \thispagestyle{empty}
+  % \thispagestyle{empty/
+  \pagenumbering{gobble} %omit page numbers even if the acknowledgments run for more than one page.
 }{}
 
 \newenvironment{bio}{%
   \clearpage
   \chapter*{\bioname}
   \thispagestyle{empty}
+    \pagenumbering{gobble} %omit page numbers even if the bio runs for more than one page.
 }
 {}
 
@@ -775,6 +779,9 @@
 \setlength{\cftfignumwidth}{0.75in}
 \setlength{\cftfigindent}{0 em} 
 
+% Line breaks on long titles 0.5in from right edge of page numbers in TOC
+\renewcommand{\@tocrmarg}{0.5in}
+
 % Entries in LOT and LOF are one line apart
 \setlength\cftbeforefigskip{\baselineskip}
 \setlength\cftbeforetabskip{\baselineskip}
@@ -783,7 +790,7 @@
 % Adjusting figure/table captions
 \usepackage{caption}
 
-\usepackage{inputenc}
+% \usepackage{inputenc}
 
 \usepackage{float}
 
