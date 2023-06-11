@@ -1,4 +1,4 @@
-\documentclass[boldcaps,10pt]{USFDissertation}
+\documentclass[10pt, boldcaps]{USFDissertation}
 %% Package options
 % Font sizes (default 10pt)
 %   10pt, 11pt, 12pt
@@ -22,29 +22,15 @@
 %% Make a title page
 \maketitle
 
-\doublespacing
 % Dedication and acknowledgments
 \input{dedication}
 
 % Begin numbering with roman numerals
 \frontmatter
 
-\singlespacing
-%% Insert a table of contents
-\tableofcontents
+%% Table of contents, list of tables and list of figures.  
+\contents
 
-%% Insert a table of tables -- comes before figures in the format.
-% The tocloft package does not include a clear page, so we override that here.
-\clearpage
-\addcontentsline{toc}{chapter}{List of Tables}% Print LOT in TOC
-\listoftables
-
-%% Insert a table of figures
-\clearpage
-\addcontentsline{toc}{chapter}{List of Figures}% Print LOF in TOC
-\listoffigures
-
-\doublespacing
 \input{abstract}
 
 %% Begin page numbering with arabic numerals

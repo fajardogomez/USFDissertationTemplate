@@ -3,10 +3,11 @@ More thorough explanations will follow, but if you're comfortable with \LaTeX an
 
 \begin{todolist}
 \item Do you have a single major professor or two co-major professors? Make sure you use the correct settings in the title page and comment out what you don't need.
-\item Scroll through the Table of Contents and make sure everything looks right. 
+\item Scroll through the Contents and make sure everything looks right. 
 \begin{todolist}
 \item Chapter and section headings should use Title Case (where all words except some prepositions/articles are capitalized), and for subsections and lower levels, headings should use sentence case (regular capitalization). A package is currently adjusting all titles in chapters and sections to add title case, which should be reflected in the Table of Contents, but this may cause incorrect capitalization of some words.
-\item Subsubsection headings should be in sentence case (only the first word and proper nouns are capitalized.) The Table of Contents only lists up to subsubsections but if you use any finer sectioning commands you will have to check that the headings printed correctly ``manually''
+\item Subsubsection headings should be in sentence case (only the first word and proper nouns are capitalized.) The Table of Contents only lists up to subsubsections but if you use any finer sectioning commands you will have to check that the headings printed correctly ``manually.''
+\item Only the first sentence of each caption should appear in the List of Tables and List of Figures.
 \end{todolist}
 \item Though most widow/orphan lines should be taken care of, look out for orphan headings: headings (where the title prints) of subsections appear as the last line of a page. Fix these by adding \verb|\newpage| wherever appropriate.
 \item Check the margins and make sure you don't have anything running off the sides of the page. When including long expressions in math mode in a paragraph, consider using \verb|\begin{sloppypar}| and \verb|\end{sloppypar}| to make sure they don't exceed the text width. 

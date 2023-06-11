@@ -49,7 +49,8 @@
 %% settings. Further modifications by Lina Fajardo Gómez starting on March
 %% 22nd, 2022.
 
-
+%% v.3.6:  Fixed the single/double spacing. _Finally_
+%% v.3.5:  Removed hanging indents in long section/subsection headings
 %% v.3.4:  Added \doublespacing and \singlespacing in main file. Bit of a hack but the commands built into TOC and friends were making the abstract and acknowledgments single spaced. 
 %% v.3.3:  Changed \thispagestyle{empty} to \pagenumbering{gobble} in frontmatter chapters. Updated list of lcwords in preamble. Removed a topskip=0pt in chapter definition to fix a blank page at the end of the document and adjusted chaptoplen measurements to fix top margins. Fixed spacing in front matter.
 %% v.3.2:  Margins are now consistent across different font sizes. No widow headings.
@@ -329,7 +330,6 @@
                     \addtocontents{lot}{\protect\addvspace{10\p@}}%
 
                     \@makechapterhead{#2}%
-                    \doublespacing
                     \@afterheading
                     }
 
@@ -371,13 +371,15 @@
 \newcommand\section{\@startsection {section}{1}{\z@}%
                                    {-3.5ex \@plus -1ex \@minus -.2ex}%
                                    {2.3ex \@plus.2ex}%
+                                   % {-1em }% Long titles don't have a hanging indent
                                    {\if@boldsections\bfseries\else\normalfont\fi}}
 
 % Subsection headings are indented to be different from section headings                       
 \newcommand\subsection{\@startsection{subsection}{2}{0.5in}%
                                      {-3.25ex\@plus -1ex \@minus -.2ex}%
                                      {1.5ex \@plus .2ex}%
-                                     {\if@boldsections\bfseries\else\normalfont\fi}}
+                                    % {-1em}%Long titles don't have a hanging indent but the paragraph doesn't start in a new line...
+                                    {\if@boldsections\bfseries\else\normalfont\fi}}
 
 \newcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
                                      {-3.25ex\@plus -1ex \@minus -.2ex}%
@@ -424,6 +426,29 @@
 \newcommand\labelitemiii{\labelitemfont \textasteriskcentered}
 \newcommand\labelitemiv {\labelitemfont \textperiodcentered}
 \newcommand\labelitemfont{\normalfont}
+
+%%%% Names
+\newcommand\contentsname{Table of Contents}
+\newcommand\listfigurename{List of Figures}
+\newcommand\listtablename{List of Tables}
+\newcommand\bibname{References}
+\newcommand\indexname{Index}
+\newcommand\figurename{Figure}
+\newcommand\tablename{Table}
+\newcommand\chaptername{Chapter}
+\newcommand\appendixname{Appendix}
+\newcommand\abstractname{Abstract}
+
+% USF Dissertation specific
+\newcommand\dedicationname{Dedication}
+\newcommand\acknowledgmentsname{Acknowledgments}
+\newcommand\bioname{About the Author}
+
+\def\today{\ifcase\month\or
+  January\or February\or March\or April\or May\or June\or
+  July\or August\or September\or October\or November\or December\fi
+  \space\number\day, \number\year}
+
 \newenvironment{description}
                {\list{}{\labelwidth\z@ \itemindent-\leftmargin
                         \let\makelabel\descriptionlabel}}
@@ -433,12 +458,40 @@
 
 \newenvironment{abstract}{%
   \clearpage
-  \doublespacing
+  \begin{doublespace}
   \chapter*{\abstractname}
   \phantomsection%adds hyperref anchor
 \addcontentsline{toc}{chapter}{\abstractname}
 }
-{}
+{\end{doublespace}}
+
+%% Optional environments
+%  dedication (optional)        To [person]/In Memory of [person]
+%  acknowledgments (optional)   Intelectual debts acknowledged
+%  bio (optional)               ``About the author'' page
+
+\newenvironment{dedication}{%
+  \clearpage
+  \begin{doublespace}
+  \chapter*{\dedicationname}
+  \thispagestyle{empty}  
+}{\end{doublespace}}
+\newenvironment{acknowledgments}{%
+  \clearpage
+  \begin{doublespace}
+  \chapter*{\acknowledgmentsname}
+  % \thispagestyle{empty/
+  \pagenumbering{gobble} %omit page numbers even if the acknowledgments run for more than one page.
+}{\end{doublespace}}
+
+\newenvironment{bio}{%
+  \clearpage
+  \begin{doublespace}
+  \chapter*{\bioname}
+  \thispagestyle{empty}
+    \pagenumbering{gobble} %omit page numbers even if the bio runs for more than one page.
+}
+{\end{doublespace}}
 
 \newenvironment{verse}
                {\let\\\@centercr
@@ -541,8 +594,7 @@
     \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
   \fi
   \vskip\belowcaptionskip}  
-%%% 
-% In case there are any deprecated stragglers... 
+%%% In case there are any deprecated stragglers... 
 \DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
 \DeclareOldFontCommand{\sf}{\normalfont\sffamily}{\mathsf}
 \DeclareOldFontCommand{\tt}{\normalfont\ttfamily}{\mathtt}
@@ -561,7 +613,6 @@
 \newcommand\tableofcontents{%
     \clearpage
     \pagenumbering{roman}
-    \singlespacing
     \pagestyle{plain}
     \@restonecolfalse
     \chapter*{\contentsname
@@ -601,7 +652,6 @@
 \newcommand\listoffigures{
     \clearpage
       \@restonecolfalse
-    \singlespacing
     \chapter*{\listfigurename}%
       \@mkboth{\listfigurename}%
               {\listfigurename}%
@@ -611,12 +661,50 @@
 \newcommand\listoftables{%
     \clearpage
       \@restonecolfalse
-    \singlespacing
     \chapter*{\listtablename}%
       \@mkboth{%
           \listtablename}%
          {\listtablename}%
     \@starttoc{lot}%
+    }
+% Only print list of tables and list of figures if they are not empty
+\newif\iffigures
+\newif\iftables
+\AtEndDocument {%
+    \if@filesw
+       \ifnum\value{figure}=\z@ % no figures
+          \immediate\write\@mainaux {\global\string\figuresfalse}%
+       \else
+          \immediate\write\@mainaux {\global\string\figurestrue}%
+       \fi
+       \ifnum\value{table}=\z@ % no tables
+          \immediate\write\@mainaux {\global\string\tablesfalse}%
+       \else
+          \immediate\write\@mainaux {\global\string\tablestrue}%
+       \fi
+    \fi
+}
+
+\newcommand\contents{%
+    %% Insert a table of contents
+\begin{singlespace}
+\tableofcontents
+\end{singlespace}
+
+%% Insert a table of tables -- comes before figures in the format.
+% The tocloft package does not include a clear page, so we override that here.
+\iftables
+    \clearpage
+    \addcontentsline{toc}{chapter}{List of Tables}% Print LOT in TOC
+    \listoftables
+\fi
+
+%% Insert a table of figures
+\iffigures
+    \clearpage
+    \addcontentsline{toc}{chapter}{List of Figures}% Print LOF in TOC
+    \listoffigures
+\fi
     }
 \let\l@table\l@figure
 \newdimen\bibindent
@@ -667,54 +755,7 @@
     \parindent 1em%
     \noindent
     \hb@xt@1.8em{\hss\@makefnmark}#1}
-
-%%%% Names
-\newcommand\contentsname{Table of Contents}
-\newcommand\listfigurename{List of Figures}
-\newcommand\listtablename{List of Tables}
-\newcommand\bibname{References}
-\newcommand\indexname{Index}
-\newcommand\figurename{Figure}
-\newcommand\tablename{Table}
-\newcommand\chaptername{Chapter}
-\newcommand\appendixname{Appendix}
-\newcommand\abstractname{Abstract}
-\def\today{\ifcase\month\or
-  January\or February\or March\or April\or May\or June\or
-  July\or August\or September\or October\or November\or December\fi
-  \space\number\day, \number\year}
-  
-
-% USF Dissertation specific
-\newcommand\dedicationname{Dedication}
-\newcommand\acknowledgmentsname{Acknowledgments}
-\newcommand\bioname{About the Author}
-
-%% Optional environments
-%  dedication (optional)        To [person]/In Memory of [person]
-%  acknowledgments (optional)   Intelectual debts acknowledged
-%  bio (optional)               ``About the author'' page
-
-\newenvironment{dedication}{%
-  \clearpage
-  \chapter*{\dedicationname}
-  \thispagestyle{empty}
-}{}
-\newenvironment{acknowledgments}{%
-  \clearpage
-  \chapter*{\acknowledgmentsname}
-  % \thispagestyle{empty/
-  \pagenumbering{gobble} %omit page numbers even if the acknowledgments run for more than one page.
-}{}
-
-\newenvironment{bio}{%
-  \clearpage
-  \chapter*{\bioname}
-  \thispagestyle{empty}
-    \pagenumbering{gobble} %omit page numbers even if the bio runs for more than one page.
-}
-{}
-
+ 
 % Leaving LOT and LOF to tocloft package
 % All formatting happens here
 \usepackage{tocloft}
@@ -798,6 +839,12 @@
 
 % The option nobottomtitles prevents widow headings.
 \usepackage[nobottomtitles]{titlesec}
+
+% Remove hanging indents in long headings
+\titleformat{name=\section}[block]
+  {\if@boldsections\bfseries\else\normalfont\fi}{\thesection}{2em}{\hspace{-1em}}{}
+\titleformat{name=\subsection}[block]
+  {\if@boldsections\bfseries\else\normalfont\fi}{\thesubsection}{2em}{\hspace{-1em}}{}  
 
 % Adding Title Case to section and subsection headings.
 \let\oldsection\section
