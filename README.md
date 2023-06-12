@@ -86,9 +86,9 @@ Commands can also take arguments. The number of arguments is indicated in betwee
 ```
 You can also use commands to print comments in the .pdf file (which is nice if you prefer to read from there as opposed to using Review in Overleaf). There is a built in command for this:
 ``` latex
-\newcommand{\PersonA}[1]{{\color{OliveGreen}\textbf{Person A says:} #1}}
+\newcommand{\PersonA}[1]{{\color{#2081F7}\textbf{Person A says:} #1}}
 ```
-which prints `{{\color{OliveGreen}\textbf{Person A says:} hi}` as ${{\color{OliveGreen}\textbf{Person A says:} hi}$. You can add more and change the colors if you're getting feedback from more than one advisor.
+which prints `\PersonA{hi}` as ${\color{#2081F7}\textbf{Person A says:}\text{ hi}}$. You can add more and change the colors if you're getting feedback from more than one advisor.
 
 You may also find it useful to define delimiters and operators. Besides being faster to type, the delimiter `\abs` also automatically resizes. If you were using `|x|` before, note that it doesn't play nice with larger symbols, and `|\displaystyle\sum_{i=1}^\infty x_i|` just doesn't look quite right $|\displaystyle\sum_{i=1}^\infty x_i|$. You could use `\left|\displaystyle\sum_{i=1}^\infty x_i\right|`, which results in $\left|\displaystyle\sum_{i=1}^\infty x_i\right|$. The faster way of getting the same results with the macro is to use the starred version of `\abs`: `\abs*{\displaystyle\sum_{i=1}^\infty x_i}`. Though some ooperators are already defined, the typesetting of `$\sin x$` ($\sin x$) is different from what you'd get using `$\text{sin} x$` ($\text{sin} x$) and not all the operators you'd want are necessarily built in. 
 ``` latex
