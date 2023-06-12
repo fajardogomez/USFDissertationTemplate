@@ -26,8 +26,11 @@
 \usepackage{tikz}
 \usepackage{breqn} % break long math into lines
 
-%%% Only loading these packages because this is a template!!! Not necessary for math.
+%%% Only loading these packages because this is a template. Not necessary for math, so feel free to delete this.
 \usepackage{lipsum}
+
+% With this you can insert pages from any other pdf document.
+\usepackage{pdfpages}
 
 % Modified list environment for a to-do list
 \newlist{todolist}{itemize}{2}
@@ -68,7 +71,7 @@
 % Use the syntax \newtheorem{<command>}[<counter>]{<Environment name>}
 
 % Theorems are numbered by chapter, other environments use the same counter as theorems.
-% If you change these commands, make sure to adjust the cleveref names in the style_preamble file. 
+% If you change these commands, make sure to adjust the cleveref names below. 
 \newtheorem{Thm}{Theorem}[chapter]
 \newtheorem{Coro}[Thm]{Corollary}
 \newtheorem{Prop}[Thm]{Proposition}

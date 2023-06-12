@@ -242,7 +242,9 @@
   \centering
   \topskip=0pt
         \vspace*{1in}
-        \@title\par
+        \begin{doublespace}
+        \titlecap{\@title}\par
+        \end{doublespace}
     \vspace{3\h@rdreturn}\par
       by\par\vspace{3\h@rdreturn}\par
       \@author\par\vspace{4\h@rdreturn}\par
