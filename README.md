@@ -15,7 +15,7 @@ An unofficial template to mostly meet USF's ETD guidelines
 - [Some Style Tips](#some-style-tips)
 
 ## Description
-The project can be copied (and viewed) from [Overleaf](https://www.overleaf.com/read/qmrvgskkzrmr). Though a lot of time and effort went into making this document meet ETD guidelines in Summer 2022 it is bound to 
+The project can be viewed in [Overleaf](https://www.overleaf.com/read/qmrvgskkzrmr) (read-only link, you should be able to copy the project from there). Though a lot of time and effort went into making this document meet ETD guidelines in Summer 2022 it is bound to 
 * have missed some formatting requirements
 * become outdated when requirements change
 * produce documents that meet the requirements but still get flagged by ETD reviewers (looking at you, "half empty" spaces that are _less_ than 5.5" long)
