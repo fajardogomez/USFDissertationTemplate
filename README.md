@@ -23,7 +23,7 @@ It falls on the user to do several checks before submitting. A checklist is prov
 
 This template was written to be used "right out of the box," with sample files that can be readily modified and code snippets that can be adapted as necessary. Many useful packages have already been loaded, both in the `.cls` file (mostly formatting that may break if messed around with too much) and in the preamble file. Be wary of the order in which you add packages to the preamble. For example, `cleveref` can produce errors when it is not the last package to be loaded. Generally, for the less $\LaTeX$ savvy it may be best to add new macros and packages in the neighborhood of other things in the template that are serving a similar purpose.
 
-Should you run into a problem not easily answered by the template text, web searches, or the kind people of [stackexchange](https://tex.stackexchange.com/) just submit an issue and I'll see what I can do about it. 
+Should you run into a problem that is not addressed by the template text or can easily be solved with the help of web searches or the kind people of [stackexchange](https://tex.stackexchange.com/), submit an issue and I'll see what I can do about it. 
 
 ## Getting Started
 The project is organized as a series of separate files (`.tex`, `.bib`, plus the `.cls` file defining the document class), called when necessary in `main.tex`. Images and Tikz code files have their own separate folders. The suggested use is to have one `.tex` file for each chapter (or chapter like) section, with the exception of the acknowledgments and dedication (since those tend to be short and go together). 
