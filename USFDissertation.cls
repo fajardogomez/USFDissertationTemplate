@@ -146,20 +146,20 @@
 \else
   \DeclareOption{10pt}
   {\renewcommand\@ptsize{0}
-   \renewcommand{\chapsep}{0em}
+   \renewcommand{\chapsep}{-0.7em}
    \renewcommand{\secsep}{0.3em}
    \renewcommand{\subsecsep}{1em}
    \renewcommand{\subsubsecsep}{1.8em}}
 \fi
 \DeclareOption{11pt}
   {\renewcommand\@ptsize{1}   
-   \renewcommand{\chapsep}{-0.1em}
+   \renewcommand{\chapsep}{-.5em}
    \renewcommand{\secsep}{0.5em}
    \renewcommand{\subsecsep}{1.3em}
    \renewcommand{\subsubsecsep}{2em}}
 \DeclareOption{12pt}
   {\renewcommand\@ptsize{2}   
-   \renewcommand{\chapsep}{0em}
+   \renewcommand{\chapsep}{-.4em}
    \renewcommand{\secsep}{0.83em}
    \renewcommand{\subsecsep}{1.5em}
    \renewcommand{\subsubsecsep}{2.2em}}
