@@ -31,12 +31,12 @@ Chapter headings can be modified by loading different options for the document c
 
 The option \texttt{boldcaps} most closely resembles the sample .pdf files posted on the ETD website (as of Summer 2022), though \texttt{boldheadings} should also be acceptable. For the boldface averse, there are also \texttt{allcaps} (which uses all caps headings for chapters) and \texttt{plainheadings} (\verb|\normalfont| throughout), though they may not match guidelines. You can also modify the font size here. 
 
-\subsection{title case and sentence case}
+\subsection{Title case and sentence case}
 Chapter, section and subsection heading should use title case (Where Every Major Word is Capitalized), while everything else (subsubsection, paragraph, etc.) should use sentence case (Where only the first word and proper names are capitalized). Title case is implemented automatically. Note that while the title of this subsection is typed
 \lstinputlisting[firstline=34, lastline=34]{chapter02.tex}
 without any capital letters, it prints both in the heading and Table of Contents with correct capitalization. However, this setting does not affect subsubsections.
 
-\subsubsection{title case is not applied here}
+\subsubsection{Title case is not applied here}
 \subsubsection{You should use sentence case when typing titles}
 
 The suggested use is to type all sectioning titles in {\em sentence case}. If it needs to be adjusted to title case, it will be done automatically and it will otherwise be left as is. The settings can be adjusted from the preamble file. The current list is below.
@@ -51,11 +51,17 @@ What \textit{should} happen is the section heading should run without hanging in
 \subsection{How the table of contents handles these very long headings that do not fit in a single line}
 The hanging indent is only in the main body. The table of contents should display the very long section/subsection title in separate lines, with the second one having a 0.25" indent. 
 \subsubsection{Even very long titles should be moved to the next line down in the table of contents with an additional indent}
+\subsection{Using math mode in headings, like  \texorpdfstring{$\mathbb{N}$}{N}}
+Note that if you try to put math symbols in the title of a chapter, section, etc. you may get errors (or may run out of time waiting for the document to compile). Terms in math mode, like $(p,q)$ will automatically be capitalized unless you add them to the list of lowercase words in the preamble (look for \verb|\Addlcwords|). Otherwise, try what is written here:
+
+\begin{lstlisting}
+\texorpdfstring{<math symbol>}{<plain text alternative>}
+\end{lstlisting}
 
 \section{Floats}
 There is a very good chance you will have to include figures in your dissertation. Note that you can add an optional position parameter when you include floating elements. If you don't include any, \LaTeX will decide the placement for you. You can always force an element to appear exactly where it is called with \texttt{[H]} or \texttt{[h!]}, but be aware that it prevents any empty spaces after the object from being filled with text that is typed after it. Just make sure that when you force empty space it doesn't take up more than half the page (5.5 inches) unless it's the end of a chapter. The options for positions are 
 \begin{itemize}
-\item \texttt{h} Here. A soft suggestion.
+\item \texttt{h} Here. A gentle suggestion.
 \item \texttt{H} HERE. In shouty caps.
 \item \texttt{t} Top, of the page.
 \item \texttt{b} Bottom, self-explanatory.
@@ -129,6 +135,9 @@ Several theorem-like environments are pre-defined for you in \texttt{preamble.te
 \label{mythm}
 This is a theorem.
 \end{Thm}
+\begin{proof}
+This is the proof of the theorem above.
+\end{proof}
 
 \begin{Def}
 This is a definition.
