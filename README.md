@@ -11,7 +11,7 @@ An unofficial template to mostly meet USF's ETD guidelines. Designed with math i
     - [Macros](#macros) 
     - [Formatting](#formatting)
   - [Main Body](#main-body)
-  - [Bibliograph](#bibliography)
+  - [Bibliography](#bibliography)
 - [Some Style Tips](#some-style-tips)
 
 ## Description
