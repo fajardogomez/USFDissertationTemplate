@@ -20,7 +20,7 @@ The project can be viewed in [Overleaf](https://www.overleaf.com/read/qmrvgskkzr
 * become outdated when requirements change
 * produce documents that meet the requirements but still get flagged by ETD reviewers (looking at you, "half empty" spaces that are _less_ than 5.5" long). It falls on the user to do several checks before submitting. A checklist is provided, just don't count on it to be exhaustive. 
 
-This template was written to be used "right out of the box," with sample files that can be readily modified and code snippets that can be adapted as necessary. Many useful packages have already been loaded, both in the `.cls` file (mostly formatting that may break if messed around with too much) and in the preamble file. Be wary of the order in which you add packages to the preamble. For example, `cleveref` can produce errors when it is not the last package to be loaded. Generally, for the less $\LaTeX$ savvy it may be best to add new macros and packages in the neighborhood of other things in the template that are serving a similar purpose.
+This template was written to be used "right out of the box," with sample files that can be readily modified and code snippets that can be adapted as necessary. Many useful packages have already been loaded, both in the `.cls` file (mostly formatting that may break if messed around with too much) and in the preamble file. Be wary of the order in which you add packages to the preamble. For example, `cleveref` can produce errors when it is not the last package to be loaded. Generally, for the less $\LaTeX$ savvy, it may be best to add new macros and packages in the neighborhood of other things in the template that are serving a similar purpose.
 
 Should you run into a problem that is not addressed by the template text or can't easily be solved with the help of web searches or the kind people of [stackexchange](https://tex.stackexchange.com/), submit an issue. 
 
@@ -151,10 +151,10 @@ without having to track down every instance of `\Cref{mythm}` and changing it. I
 5. Use `\Cref` or `\cref` consistently: one will print "Theorem 1.23" while other will print "theorem 1.23"). 
 
 ### Bibliography
-The file `biblio.bib` is included in the template. You can type in (or copy and paste) BibTeX entries there. Just make sure to skim through any you don't manually type in to make sure they have all the information correct. Type out author names in full (often Google Scholar results only show the first initial), separate the given and family name with commas (`Family Name, Given`) if you're worried they will print incorrectly (i.e. "Given F. Name" for the example given). 
+The file `biblio.bib` is included in the template. You can type in (or copy and paste) BibTeX entries there. Just make sure to skim through any you don't manually type in to make sure they have all the information correct. Type out author names in full (often Google Scholar results only show the first initial). Separate the given and family name with commas (`Family Name, Given`) if you're worried they will print incorrectly (i.e. "Given F. Name" for the example given). 
 
 ## Some Style Tips
 1. Add punctuation at the end of equations if they are used as part of a sentence.
-2. Don't start sentences with references or notation (e.g. "The set of real numbers is denoted by $\mathbb{R}$" instead of "$\mathbb{R} denotes the set of real numbers.")
+2. Don't start sentences with references or notation (e.g. "The set of real numbers is denoted by $\mathbb{R}$" instead of "$\mathbb{R}$ denotes the set of real numbers.")
 3. Use `\begin{sloppypar}` and `\end{sloppypar}` to enclose paragraphs with in-line math that runs off the margins.
 For more, read the first chapter of [A Primer of Mathematical Writing](https://arxiv.org/pdf/1612.04888.pdf).
